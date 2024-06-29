@@ -1,4 +1,6 @@
+import { motion } from "framer-motion"
 import { ChevronRightIcon } from "@heroicons/react/24/outline"
+import { useNavigation } from "../contexts/NavigationContext"
 
 interface Props {
   children: React.ReactNode
@@ -7,6 +9,8 @@ interface Props {
 }
 
 const ProjectLink = ({ children, name, setSelectedProject }: Props) => {
+  const { isOpen } = useNavigation();
+
   const handleClick = () => {
     setSelectedProject(null)
     setTimeout(() => {
@@ -24,7 +28,11 @@ const ProjectLink = ({ children, name, setSelectedProject }: Props) => {
         <p className="text-inherit truncate whitespace-nowrap tracking-wide">
           {name}
         </p>
-        <ChevronRightIcon className="stroke-inherit stroke-[0.75] min-w-8 w-8" />
+        <motion.div
+          className={`transition-opacity ${isOpen ? "opacity-100" : "opacity-0"}`}
+        >
+          <ChevronRightIcon className="stroke-inherit stroke-[0.75] min-w-8 w-8" />
+        </motion.div>
       </div>
     </a>
   )
